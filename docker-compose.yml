@@ -22,27 +22,6 @@ services:
     options:
      max-size: "250m"
      max-file: "3"
-   networks:
-    - monitor-net
-
-  nodeexporter:
-   image: prom/node-exporter:latest
-   container_name: nodeexporter
-   user: root
-   privileged: true
-   volumes:
-     - /proc:/host/proc:ro
-     - /sys:/host/sys:ro
-     - /:/rootfs:ro
-   command:
-     - '--path.procfs=/host/proc'
-     - '--path.sysfs=/host/sys'
-     - '--collector.filesystem.ignored-mount-points=^/(sys|proc|dev|host|etc)($$|/)'
-   restart: unless-stopped
-      expose:
-     - 9100
-   networks:
-     - monitor-net
        
   alertmanager:
    image: alertmanager:latest
@@ -59,7 +38,24 @@ services:
     options:
      max-size: "250m"
      max-file: "3"
+  
+  nodeexporter:
+    image: 10.129.176.139:8182/node-exporter:v1.0.0
+    container_name: nodeexporter
+    user: root
+    privileged: true
+    volumes:
+      - /proc:/host/proc:ro
+      - /sys:/host/sys:ro
+      - /:/rootfs:ro
+    command:
+      - '--path.procfs=/host/proc'
+      - '--path.sysfs=/host/sys'
+      - '--collector.filesystem.ignored-mount-points=^/(sys|proc|dev|host|etc)($$|/)'
+    restart: unless-stopped
+    ports:
+      - "9100:9100"
+
 volumes:
  prometheus:
   external:
-   name: prometheus
