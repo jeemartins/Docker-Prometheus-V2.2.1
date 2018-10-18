@@ -3,7 +3,7 @@ version: '2'
 services:
 
   prometheus:
-   image: prometheus:latest
+   image: prom/prometheus:latest
    command:  prometheus --config.file=/etc/prometheus/prometheus.yml --storage.tsdb.retention=30d
    privileged: true
    ports:
@@ -21,7 +21,7 @@ services:
      max-file: "3"
 
   alertmanager:
-   image: alertmanager:latest
+   image: prom/alertmanager:latest
    env_file: './environment.env'
    command: /etc/prometheus/run.sh
    privileged: true
@@ -36,7 +36,7 @@ services:
      max-size: "250m"
      max-file: "3"
   nodeexporter:
-    image: node-exporter:latest
+    image: prom/node-exporter:latest
     container_name: nodeexporter
     user: root
     privileged: true
