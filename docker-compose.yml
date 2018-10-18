@@ -40,7 +40,7 @@ services:
      max-file: "3"
   
   nodeexporter:
-    image: 10.129.176.139:8182/node-exporter:v1.0.0
+    image: prom/node-exporter:latest
     container_name: nodeexporter
     user: root
     privileged: true
