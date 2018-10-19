@@ -60,7 +60,7 @@ services:
       - "9100:9100"
       
   grafana:
-    image: 10.129.176.139:8182/grafana:5.2
+    image: grafana/grafana:latest
     user: "104"
     depends_on:
       - prometheus
