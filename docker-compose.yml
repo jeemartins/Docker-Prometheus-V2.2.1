@@ -4,13 +4,19 @@ services:
 
   prometheus:
    image: prom/prometheus:latest
-   command:  prometheus --config.file=/etc/prometheus/prometheus.yml --storage.tsdb.retention=30d
+   command:
+    - '--config.file=/etc/prometheus/prometheus.yml'
+    - '--storage.tsdb.path=/prometheus'
+    - '--web.console.libraries=/etc/prometheus/console_libraries'
+    - '--web.console.templates=/etc/prometheus/consoles'
+    - '--storage.tsdb.retention=200h'
+    - '--web.enable-lifecycle'
+    # restart: unless-stopped
    privileged: true
    ports:
     - "9090:9090"
    volumes:
     - prometheus:/etc/prometheus/data
-    - prometheus_data:/prometheus
    hostname: prometheus
    container_name: prometheus
    restart: always
@@ -35,6 +41,7 @@ services:
     options:
      max-size: "250m"
      max-file: "3"
+     
   nodeexporter:
     image: prom/node-exporter:latest
     container_name: nodeexporter
