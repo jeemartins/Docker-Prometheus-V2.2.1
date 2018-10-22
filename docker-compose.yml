@@ -29,13 +29,12 @@ services:
   alertmanager:
    image: prom/alertmanager:latest
    env_file: './environment.env'
-   command: /etc/prometheus/run.sh
    privileged: true
    ports:
     - "9093:9093"
    hostname: alertmanager
    container_name: alertmanager
-   restart: always
+   restart: unless-stopped
    logging:
     driver: "json-file"
     options:
