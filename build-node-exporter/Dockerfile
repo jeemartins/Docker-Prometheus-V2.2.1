@@ -1,10 +1,10 @@
 FROM prom/node-exporter:latest
 
-ARG "version=0.1.0-dev"
-ARG "build_date=unknown"
-ARG "commit_hash=unknown"
-ARG "vcs_url=unknown"
-ARG "vcs_branch=unknown"
+ARG version="0.1.0-dev"
+ARG build_date="unknown"
+ARG commit_hash="unknown"
+ARG vcs_url="unknown"
+ARG vcs_branch="unknown"
 
 LABEL org.label-schema.vendor="Basi" \
     org.label-schema.name="node-exporter" \
@@ -21,7 +21,6 @@ LABEL org.label-schema.vendor="Basi" \
 
 ENV NODE_EXPORTER_BIN=/bin/node_exporter
 
-COPY ./rootfs /
 USER root
 
 ENTRYPOINT  [ "/docker-entrypoint.sh" ]
