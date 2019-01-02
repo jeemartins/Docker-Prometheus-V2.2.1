@@ -1,0 +1,40 @@
+groups:
+- name: uptime
+  rules:
+    - alert: uptime
+      expr: up == 0
+      for: 30s
+      labels:
+        severity: "critical"
+      annotations:
+        summary: "INSTANCE CRITICAL - `{{ $labels.instance }}` down"
+        description: "`{{ $labels.instance }}` of job {{ $labels.job }} has been down for more than 30 seconds"
+
+- name: cpu
+  rules:
+    - alert: node_load_1
+      expr: node_load1 > 13
+      for: 20s
+      labels:
+       serverity: "warning"
+       instance: ""
+      annotations:
+       summary: "HIGH LOAD AVERAGE ATTENTION ON `{{ $labels.instance }}` :warning:"
+       description: "_`{{ $labels.instance }} has a high load average. Load Average 4m is {{ humanize $value}}_"
+    - alert: node_load_5
+      expr: node_load5 > 17
+      for: 20s
+      labels:
+       serverity: "warning"
+       instance: ""
+      annotations:
+       summary: "HIGH LOAD AVERAGE WARNING ON `{{ $labels.instance }}` :warning:"
+       description: "_`{{ $labels.instance }}` has a high load average. Load Average 4m is {{ humanize $value}}_"
+    - alert: node_load_15
+      expr: node_load15 > 0.01
+      for: 20s
+      labels:
+       serverity: "critical"
+      annotations:
+       summary: "HIGH LOAD AVERAGE CRITICAL ON `{{ $labels.instance }}` :rotating_light:"
+       description: "_`{{ $labels.instance }}` has a high load average. Load Average 3.2 is {{ humanize $value}}_"
